@@ -1,4 +1,4 @@
-# prv_tute
+# Flutter Responsive WhatsApp Clone
 
 A new Flutter project.
 
