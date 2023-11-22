@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:prv_tute/page2.dart';
-import 'package:prv_tute/provider/dataProvider.dart';
-import 'package:prv_tute/provider/userProvider.dart';
+import 'package:prv_tute/colors.dart';
+import 'package:prv_tute/responsive/responsive.dart';
+import 'package:prv_tute/screens/mobile_screen_layout.dart';
+import 'package:prv_tute/screens/web_screen_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,64 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => UserProvider()),
-        ChangeNotifierProvider(create: (context) => DataClass()),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData.dark().copyWith(
+        useMaterial3: true,
+        scaffoldBackgroundColor: backgroundColor,
       ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              context.watch<UserProvider>().userName,
-            ),
-            Text(
-              context.watch<UserProvider>().count.toString(),
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const NewPage()),
-          );
-          // context.read<UserProvider>().incrementCount();
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      home: const ResponsiveLayout(
+        webScreenLayout: WebScreenLayout(),
+        mobileScreenLayout: MobileScreenLayout(),
       ),
     );
   }
